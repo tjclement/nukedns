@@ -48,7 +48,7 @@ fn parse_denylist() -> Option<Vec<String>> {
 
 fn main() -> std::io::Result<()> {
     {
-        let socket = UdpSocket::bind("127.0.0.1:1053")?;
+        let socket = UdpSocket::bind("0.0.0.0:53")?;
         let mut buf = [0u8; 1024];
         let deny_entries = parse_denylist().unwrap();
 
