@@ -20,11 +20,13 @@ use tokio::runtime::Runtime;
 
 async fn recurse(query: &LowerQuery) -> Option<Vec<Record>> {
     let stream = UdpClientStream::<UdpSocket>::new(([8,8,8,8], 53).into());
-    let (mut client, dns_background) = AsyncClient::connect(stream).await.ok()?;
+    let (mut client, dns_background) = AsyncClient::connect(stream).await.unwrap();
+
+    tokio::spawn(dns_background);
 
     // Create a query future
     let name: Name = query.name().into();
-    let response = client.query(name, DNSClass::IN, RecordType::A).await.ok()?;
+    let response = client.query(name, DNSClass::IN, RecordType::A).await.unwrap();
 
     // validate it's what we expected
     let answers = response.answers().to_owned();
@@ -33,7 +35,7 @@ async fn recurse(query: &LowerQuery) -> Option<Vec<Record>> {
 }
 
 fn parse_denylist() -> Option<Vec<String>> {
-    let file = File::open("./denylist.txt").ok()?;
+    let file = File::open("./denylist.txt").unwrap();
     let reader = BufReader::new(file);
     let mut deny_entries:Vec<String> = Vec::with_capacity(4096);
 
@@ -80,7 +82,7 @@ async fn handle_request(socket: Arc<UdpSocket>, src: SocketAddr, partial_buf: Ve
     }
 
     // tx.send(byte_vec);
-    socket.send_to(byte_vec.as_slice(), src).await;
+    socket.send_to(byte_vec.as_slice(), src).await.unwrap();
 }
 
 
