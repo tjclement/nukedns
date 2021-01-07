@@ -10,3 +10,4 @@ edition = "2018"
 trust-dns-proto = "0.20.0"
 trust-dns-client = "0.20.0"
 trust-dns-server = "0.20.0"
+tokio = { version = "1.0.1", features = ["full"] }
