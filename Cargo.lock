@@ -314,6 +314,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "nukedns"
+version = "0.1.0"
+dependencies = [
+ "tokio",
+ "trust-dns-client",
+ "trust-dns-proto",
+ "trust-dns-server",
+]
+
+[[package]]
 name = "num-integer"
 version = "0.1.44"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -508,16 +518,6 @@ name = "regex-syntax"
 version = "0.6.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3b181ba2dcf07aaccad5448e8ead58db5b742cf85dfe035e2227f137a539a189"
-
-[[package]]
-name = "rust-helloworld"
-version = "0.1.0"
-dependencies = [
- "tokio",
- "trust-dns-client",
- "trust-dns-proto",
- "trust-dns-server",
-]
 
 [[package]]
 name = "scopeguard"

@@ -1,5 +1,5 @@
 [package]
-name = "rust-helloworld"
+name = "nukedns"
 version = "0.1.0"
 authors = ["Tom <mr@tomclement.nl>"]
 edition = "2018"
