@@ -69,7 +69,7 @@ async fn handle_request(socket: Arc<UdpSocket>, src: SocketAddr, partial_buf: Ve
         .set_message_type(MessageType::Response)
         .set_op_code(OpCode::Query)
         .set_authoritative(false)
-        .set_recursion_desired(true)
+        .set_recursion_desired(request.recursion_desired())
         .set_recursion_available(true)
         .set_authentic_data(false)
         .set_checking_disabled(false);
@@ -77,7 +77,8 @@ async fn handle_request(socket: Arc<UdpSocket>, src: SocketAddr, partial_buf: Ve
     let query = request.queries()[0].to_owned();
     let domain = query.name().to_string().trim_end_matches(".").to_string();
     if deny_entries.contains_key(&domain) {
-        message.set_response_code(ResponseCode::NXDomain);
+        message.set_response_code(ResponseCode::NXDomain)
+               .set_authoritative(true);
     } else  {
         let maybe_answers = {
             let read_lock = query_cache.read().await;
